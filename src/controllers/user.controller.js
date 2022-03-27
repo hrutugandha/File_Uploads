@@ -1,6 +1,10 @@
 const express = require('express');
 
+const path = require('path');
+
 const User = require('../models/user.model');
+
+const fs = require('fs');
 
 const uploads = require('../middlewares/fileuploads')
 
@@ -38,7 +42,7 @@ router.get("/:id", async(req, res) =>{
     }
 });
 
-router.patch("/:id", async(req, res) =>{
+router.patch("/:id",fs.unlinkSync(filePath), async(req, res) =>{
     try{
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {new:true}).lean().exec();
 
